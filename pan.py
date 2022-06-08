@@ -3,7 +3,7 @@ import glob
 import imutils
 import numpy as np
 
-imgfiles=glob.glob("img/1/*")
+imgfiles=glob.glob("img/2/*")
 imgfiles.sort()
 images=[]
 
