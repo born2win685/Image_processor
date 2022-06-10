@@ -3,7 +3,7 @@ import glob
 import imutils
 import numpy as np
 
-imgfiles=glob.glob("img/2/*")
+imgfiles=glob.glob("input/pan/1/*")
 imgfiles.sort()
 images=[]
 
@@ -18,8 +18,8 @@ stitcher=cv2.Stitcher_create()
 (status,result) = stitcher.stitch(images)
 if status == 0:
     cv2.imshow("image",result)
-    cv2.imwrite("pan_output.png",result)
-    cv2.waitKey(100)
+    cv2.imwrite("output/pan_output.png",result)
+    cv2.waitKey(1000)
 
 result = cv2.copyMakeBorder(result, 10, 10, 10, 10, cv2.BORDER_CONSTANT, (0,0,0))
 
@@ -27,7 +27,7 @@ gray = cv2.cvtColor(result, cv2.COLOR_BGR2GRAY)
 thresh_img = cv2.threshold(gray, 0, 255 , cv2.THRESH_BINARY)[1]
 
 cv2.imshow("Threshold Image", thresh_img)
-cv2.waitKey(100)
+cv2.waitKey(1000)
 
 contours = cv2.findContours(thresh_img.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
@@ -51,13 +51,13 @@ contours = imutils.grab_contours(contours)
 areaOI = max(contours, key=cv2.contourArea)
 
 cv2.imshow("minRectangle Image", minRectangle)
-cv2.waitKey(100)
+cv2.waitKey(1000)
 
 x, y, w, h = cv2.boundingRect(areaOI)
 
 result = result[y:y + h, x:x + w]
 
-cv2.imwrite("final_processed.png", result)
+cv2.imwrite("output/final_processed.png", result)
 cv2.imshow("Stitched Image Processed", result)
 
-cv2.waitKey(200)
+cv2.waitKey(1000)
